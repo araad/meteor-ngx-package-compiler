@@ -1,6 +1,6 @@
 Package.describe({
   name: 'araad:meteor-ngx-package-compiler',
-  version: '0.0.2',
+  version: '0.0.5',
   summary: 'Compiles meteor packages that contain Typescript on server and Angular library on client',
   documentation: "README.md"
 });

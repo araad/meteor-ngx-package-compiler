@@ -16,7 +16,6 @@ Do not include this package as a direct dependency of your meteor app. This pack
 
 ## Usage
 
----
 
 Start with the following meteor-angular boilerplate
 ```
@@ -39,6 +38,10 @@ ng generate meteor-ngx-schematics:package some-name --prefix some-prefix
 // Scoped
 ng generate meteor-ngx-schematics:pacakge @some-org/some-name --prefix some-prefix
 ```
+
+Once you start meteor, the package will be built and dependencies will beadded to package.json from local package directory.
+
+---
 
 Import angular library modules into your app
 ```
