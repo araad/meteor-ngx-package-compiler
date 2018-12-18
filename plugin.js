@@ -189,38 +189,41 @@ class MeteorNgxPackageCompiler {
   }
 
   async processCommon(packageName, files) {
-    let hasChanges = false;
-
-    let commonFiles = files.filter(
-      f =>
-        (f.getPackageName().indexOf(':') >= 0
-          ? f.getPackageName().replace(':', '-')
-          : f.getPackageName()) === packageName &&
-        f.getPathInPackage().startsWith('common/')
-    );
-
-    logVerbose(`Checking ${packageName} (common)...`);
-    logVerbose(commonFiles.length);
-
-    if (commonFiles.length > 0) {
-      hasChanges = this.hasChanges(`${packageName}.common`, commonFiles);
-    }
-
     const pkgJsonPath = path.join(
       'packages',
       packageName,
       'common',
       'package.json'
     );
-    const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath));
-    const pkgNameParts = pkgJson.name.split('/');
-    const libDir = path.join('.', 'dist', packageName);
-    const modDir = path.join('.', 'node_modules', ...pkgNameParts);
-    logVerbose('*******', modDir, '*********');
 
-    if (hasChanges || !fs.existsSync(libDir) || !fs.existsSync(modDir)) {
-      log(`Building files from ${packageName} (common)...`);
-      await this.buildCommon(packageName, libDir, modDir, pkgJson.name);
+    if (fs.existsSync(pkgJsonPath)) {
+      let hasChanges = false;
+
+      let commonFiles = files.filter(
+        f =>
+          (f.getPackageName().indexOf(':') >= 0
+            ? f.getPackageName().replace(':', '-')
+            : f.getPackageName()) === packageName &&
+          f.getPathInPackage().startsWith('common/')
+      );
+
+      logVerbose(`Checking ${packageName} (common)...`);
+      logVerbose(commonFiles.length);
+
+      if (commonFiles.length > 0) {
+        hasChanges = this.hasChanges(`${packageName}.common`, commonFiles);
+      }
+
+      const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath));
+      const pkgNameParts = pkgJson.name.split('/');
+      const libDir = path.join('.', 'dist', packageName);
+      const modDir = path.join('.', 'node_modules', ...pkgNameParts);
+      logVerbose('*******', modDir, '*********');
+
+      if (hasChanges || !fs.existsSync(libDir) || !fs.existsSync(modDir)) {
+        log(`Building files from ${packageName} (common)...`);
+        await this.buildCommon(packageName, libDir, modDir, pkgJson.name);
+      }
     }
   }
 
