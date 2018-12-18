@@ -106,7 +106,11 @@ class MeteorNgxPackageCompiler {
         hasChanges = this.hasChanges(`${packageName}.client`, clientFiles);
       }
 
-      if (hasChanges || !fs.existsSync(libDir) || !fs.existsSync(modDir)) {
+      if (
+        hasChanges ||
+        !fs.existsSync(path.join(libDir, 'lib')) ||
+        !fs.existsSync(modDir)
+      ) {
         log(`Building angular library from ${packageName} (web.browser)...`);
         await this.buildClient(tsCfgPath, ngPkgPath, libDir, modDir);
       }

@@ -39,6 +39,15 @@ ng generate meteor-ngx-schematics:package some-name --prefix some-prefix
 ng generate meteor-ngx-schematics:pacakge @some-org/some-name --prefix some-prefix
 ```
 
+Add new package to meteor app
+```
+// Unscoped
+meteor add some-name
+
+// Scoped
+meteor add some-org:some-name
+```
+
 Once you start meteor, the package will be built and dependencies will beadded to package.json from local package directory.
 
 ---
